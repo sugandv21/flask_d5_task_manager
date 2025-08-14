@@ -35,6 +35,7 @@ def delete_task(id):
     db.session.commit()
     return redirect(url_for("main.index"))
 
+
 @main.route("/api/tasks", methods=["GET"])
 def api_get_tasks():
     tasks = Task.query.order_by(Task.due_date).all()
@@ -44,7 +45,6 @@ def api_get_tasks():
         "is_done": t.is_done,
         "due_date": t.due_date.strftime("%Y-%m-%d")
     } for t in tasks])
-
 
 @main.route("/api/tasks", methods=["POST"])
 def api_add_task():
@@ -59,7 +59,6 @@ def api_add_task():
         "is_done": task.is_done,
         "due_date": task.due_date.strftime("%Y-%m-%d")
     }), 201
-
 
 @main.route("/api/tasks/<int:id>", methods=["PUT"])
 def api_update_task(id):
@@ -78,7 +77,6 @@ def api_update_task(id):
         "is_done": task.is_done,
         "due_date": task.due_date.strftime("%Y-%m-%d")
     })
-
 
 @main.route("/api/tasks/<int:id>", methods=["DELETE"])
 def api_delete_task(id):
