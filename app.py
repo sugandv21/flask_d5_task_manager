@@ -1,19 +1,14 @@
-import os
 from flask import Flask
 from config import Config
 from extensions import db
+from models import Task
+from routes import main
 
 def create_app():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    app = Flask(
-        __name__,
-        template_folder=os.path.join(BASE_DIR, "templates"),
-        static_folder=os.path.join(BASE_DIR, "static")
-    )
+    app = Flask(__name__)
     app.config.from_object(Config)
-    db.init_app(app)
 
-    from routes import main
+    db.init_app(app)
     app.register_blueprint(main)
 
     with app.app_context():
@@ -24,4 +19,4 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
